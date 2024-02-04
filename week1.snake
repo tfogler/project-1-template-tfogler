@@ -15,9 +15,10 @@ rule fastqc:
 	output:
 		fastqc = 'results/{name}_{read}_fastqc.html'
 	params:
-		outdir = 'results/'
+		outdir = '/projectnb/bf528/students/tfogler/project-1-template-tfogler/results/'
 	shell:
 		'''
+		fastqc {input.fastq} -o {params.outdir}
 		'''
 
 # remember that you want multiqc to run only after fastqc has run on all the files
