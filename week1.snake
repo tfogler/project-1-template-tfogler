@@ -34,8 +34,12 @@ rule fastqc:
 # remember that you want multiqc to run only after fastqc has run on all the files
 rule multiqc:
 	input:
+		expand('results/{sample}_fastqc.html', sample=name_prefix)
 	output:
+		multiqc = 'results/multiqc_report.html'
 	params:
+		outdir = '/projectnb/bf528/students/tfogler/project-1-template-tfogler/results/'
 	shell:
 		'''
+		multiqc {params.outdir}
 		'''
