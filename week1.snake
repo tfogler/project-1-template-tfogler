@@ -1,10 +1,20 @@
 # use the names variable to store your list of file names
-names = []
+names = ['ADrep1subsample_R1.fastq.gz', 'ADrep2subsample_R2.fastq.gz',
+'P4rep2subsample_R1.fastq.gz', 'P0rep1subsample_R1.fastq.gz',
+'P4rep2subsample_R2.fastq.gz', 'P0rep1subsample_R2.fastq.gz',
+'P7rep1subsample_R1.fastq.gz', 'ADrep1subsample_R2.fastq.gz',
+'P0rep2subsample_R1.fastq.gz', 'P7rep1subsample_R2.fastq.gz',
+'P0rep2subsample_R2.fastq.gz', 'P7rep2subsample_R1.fastq.gz',
+'P4rep1subsample_R1.fastq.gz', 'P7rep2subsample_R2.fastq.gz',
+'ADrep2subsample_R1.fastq.gz', 'P4rep1subsample_R2.fastq.gz']
+
+name_prefix = [name.strip('.fastq.gz') for name in names]
 
 # your snakemake rule should produce the output from MultiQC and if you link your rules inputs
 # and outputs, you should only have one file listed in your rule all
 rule all:
 	input:
+		expand("results/{sample}_fastqc.html", sample=name_prefix)
 
 # make sure to read the fastqc manual to get a sense for appropriate running command
 # we have given you the basic structure of the snakemake rule to get you used to how they
