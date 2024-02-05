@@ -14,7 +14,7 @@ name_prefix = [name.strip('.fastq.gz') for name in names]
 # and outputs, you should only have one file listed in your rule all
 rule all:
 	input:
-		expand("results/{sample}_fastqc.html", sample=name_prefix)
+		expand("results/multiqc_report.html")
 
 # make sure to read the fastqc manual to get a sense for appropriate running command
 # we have given you the basic structure of the snakemake rule to get you used to how they
@@ -34,12 +34,13 @@ rule fastqc:
 # remember that you want multiqc to run only after fastqc has run on all the files
 rule multiqc:
 	input:
-		expand('results/{sample}_fastqc.html', sample=name_prefix)
+		html=expand('results/{sample}_fastqc.html', sample=name_prefix),
+		zip=expand('results/{sample}_fastqc.zip', sample=name_prefix)
 	output:
 		multiqc = 'results/multiqc_report.html'
 	params:
 		outdir = '/projectnb/bf528/students/tfogler/project-1-template-tfogler/results/'
 	shell:
 		'''
-		multiqc {params.outdir}
+		multiqc {params.outdir} -o {params.outdir}
 		'''
